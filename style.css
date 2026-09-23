@@ -1,37 +1,10 @@
 :root {
-  --bg: #f5f5f3;
-  --card-bg: #f5f5f3;
-  --text: #1c1c1c;
-  --text-muted: #6b6b6b;
-  --accent: #234e46;
-  --link-bg: #ffffff;
-  --link-border: #e4e4e0;
-  --link-shadow: rgba(20, 20, 20, 0.06);
-  --footer: #9a9a95;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #14161a;
-    --card-bg: #14161a;
-    --text: #f2f2f0;
-    --text-muted: #9a9a97;
-    --accent: #6fb8a8;
-    --link-bg: #1d2024;
-    --link-border: #2a2d32;
-    --link-shadow: rgba(0, 0, 0, 0.35);
-    --footer: #55585d;
-  }
-}
-
-:root[data-theme="dark"] {
-  --bg: #14161a;
-  --card-bg: #14161a;
+  --bg: #0d0f10;
   --text: #f2f2f0;
   --text-muted: #9a9a97;
-  --accent: #6fb8a8;
-  --link-bg: #1d2024;
-  --link-border: #2a2d32;
+  --accent: #2dd4bf;
+  --link-bg: rgba(255, 255, 255, 0.04);
+  --link-border: rgba(255, 255, 255, 0.1);
   --link-shadow: rgba(0, 0, 0, 0.35);
   --footer: #55585d;
 }
@@ -54,9 +27,90 @@ body {
   display: grid;
   place-items: center;
   padding: 32px 16px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--bg);
+  z-index: 0;
+}
+
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  background-image: linear-gradient(rgba(45, 212, 191, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45, 212, 191, 0.1) 1px, transparent 1px);
+  background-size: 26px 26px;
+  animation: lt-drift 14s ease-in-out infinite;
+}
+
+.bg-dot {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: lt-pulse 2s ease-in-out infinite;
+}
+
+.bg-terminal {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font: 400 12px ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  color: var(--accent);
+  opacity: 0.8;
+}
+
+.bg-terminal .cursor {
+  animation: lt-blink 1s step-end infinite;
+}
+
+@keyframes lt-drift {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-14px, 10px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes lt-pulse {
+  0%,
+  100% {
+    opacity: 0.14;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes lt-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 
 .card {
+  position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 420px;
   display: grid;
@@ -102,6 +156,7 @@ body {
   font-size: 15px;
   font-weight: 500;
   box-shadow: 0 1px 2px var(--link-shadow);
+  backdrop-filter: blur(6px);
   transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
 }
 

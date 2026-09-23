@@ -54,3 +54,34 @@ for (const link of links) {
   a.append(iconSpan, labelSpan);
   container.append(a);
 }
+
+const termWord = "open_to_work.sh";
+const termLine = document.getElementById("termLine");
+
+if (termLine) {
+  let charIndex = 0;
+  let phase = "type"; // type | pause | delete
+  let pauseTicksLeft = 0;
+
+  setInterval(() => {
+    if (phase === "type") {
+      if (charIndex < termWord.length) {
+        charIndex++;
+        termLine.textContent = termWord.slice(0, charIndex);
+      }
+      if (charIndex >= termWord.length) {
+        phase = "pause";
+        pauseTicksLeft = 16;
+      }
+    } else if (phase === "pause") {
+      pauseTicksLeft--;
+      if (pauseTicksLeft <= 0) phase = "delete";
+    } else {
+      if (charIndex > 0) {
+        charIndex--;
+        termLine.textContent = termWord.slice(0, charIndex);
+      }
+      if (charIndex <= 0) phase = "type";
+    }
+  }, 85);
+}
