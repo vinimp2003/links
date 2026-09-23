@@ -11,7 +11,7 @@ const links = [
   },
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/REPLACE-ME",
+    href: "https://www.linkedin.com/in/vinicius-paredes-73383424b/",
     icon: "linkedin",
   },
   {
